@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark" data-lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rzli.org — Runze Li</title>
+  <meta name="description" content="Runze Li (rzli) — Multimodal AI, Systems &amp; Engineering. Personal homepage at rzli.org." />
+  <meta property="og:title" content="rzli.org — Runze Li" />
+  <meta property="og:description" content="Exploring multimodal intelligence, clean systems, and elegant tools." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.rzli.org/" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- Background layers -->
+  <canvas id="neural-canvas" aria-hidden="true"></canvas>
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow--one" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow--two" aria-hidden="true"></div>
+
+  <!-- Top navigation -->
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="#top" aria-label="rzli.org home">
+        <span class="brand__mark">R</span>
+        <span class="brand__text">rzli<span class="brand__tld">.org</span></span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="#focus" data-i18n="nav_focus">方向</a>
+        <a href="#terminal" data-i18n="nav_terminal">终端</a>
+        <a href="#projects" data-i18n="nav_projects">探索</a>
+        <a href="#connect" data-i18n="nav_connect">联系</a>
+      </nav>
+
+      <div class="controls">
+        <button id="lang-toggle" class="icon-btn" type="button" title="Switch Language" aria-label="Switch Language">
+          <span id="lang-label">EN</span>
+        </button>
+        <button id="theme-toggle" class="icon-btn" type="button" title="Toggle Theme" aria-label="Toggle Theme">
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"></path>
+          </svg>
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <!-- Hero Section -->
+    <section class="hero reveal">
+      <div class="status-pill">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span data-i18n="status_text">在线 · 探索多模态智能与简洁系统</span>
+        <span class="status-pill__sep">·</span>
+        <code id="live-clock">--:--:--</code>
+      </div>
+
+      <h1 class="hero__title">
+        <span data-i18n="hero_hi">你好，我是</span>
+        <span class="gradient-text">Runze Li</span>
+      </h1>
+
+      <p class="hero__subtitle" data-i18n="hero_sub">
+        一名关注 <strong>Multimodal AI</strong>、<strong>高效系统工程</strong> 与 <strong>优雅工具链</strong> 的构建者。
+        在这里记录实验、构建小而美的工具，并把复杂问题拆解成清晰的现实。
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="https://github.com/David1-git" target="_blank" rel="noopener noreferrer">
+          <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
+          </svg>
+          <span>GitHub · @David1-git</span>
+        </a>
+        <a class="btn btn--ghost" href="#terminal">
+          <span data-i18n="hero_cta_term">打开交互终端</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Bento Grid Section -->
+    <section id="focus" class="bento-grid">
+      <!-- Card 1: Core Focus -->
+      <article class="card bento-span-2 spotlight reveal">
+        <div class="card__eyebrow">01 / <span data-i18n="card1_tag">核心方向</span></div>
+        <h2 class="card__title" data-i18n="card1_title">让复杂模型与真实工程场景对齐</h2>
+        <p class="card__desc" data-i18n="card1_desc">
+          专注于多模态理解与推理管线、端到端数据闭环以及轻量级自动化工具链。喜欢把前沿研究能力打磨成可复用、低延迟的生产级系统。
+        </p>
+        <div class="chips">
+          <span class="chip">Multimodal LLM</span>
+          <span class="chip">Vision-Language</span>
+          <span class="chip">Data Pipelines</span>
+          <span class="chip">Python / Async</span>
+          <span class="chip">Linux / Edge Infra</span>
+        </div>
+      </article>
+
+      <!-- Card 2: Interactive Radar / Signal Visual -->
+      <article class="card spotlight reveal">
+        <div class="card__eyebrow">02 / <span data-i18n="card2_tag">数字坐标</span></div>
+        <div class="stat-stack">
+          <div class="stat-row">
+            <span class="stat-label" data-i18n="stat_domain">主域名</span>
+            <span class="stat-val mono">rzli.org</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label" data-i18n="stat_tz">所在时区</span>
+            <span class="stat-val mono">Asia/Shanghai (UTC+8)</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label" data-i18n="stat_focus">当前关注</span>
+            <span class="stat-val" data-i18n="stat_focus_val">Omni-MLLM &amp; Agents</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label" data-i18n="stat_deploy">站点驱动</span>
+            <span class="stat-val mono">Cloudflare Pages</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Interactive Terminal -->
+      <article id="terminal" class="card bento-span-3 spotlight reveal">
+        <div class="terminal__header">
+          <div class="terminal__dots" aria-hidden="true">
+            <span class="dot dot--red"></span>
+            <span class="dot dot--yellow"></span>
+            <span class="dot dot--green"></span>
+          </div>
+          <div class="terminal__title mono">rzli@www.rzli.org: ~</div>
+          <div class="terminal__quick">
+            <button class="cmd-pill" data-cmd="whoami">whoami</button>
+            <button class="cmd-pill" data-cmd="stack">stack</button>
+            <button class="cmd-pill" data-cmd="now">now</button>
+            <button class="cmd-pill" data-cmd="links">links</button>
+            <button class="cmd-pill" data-cmd="help">help</button>
+            <button class="cmd-pill" data-cmd="clear">clear</button>
+          </div>
+        </div>
+        <div id="terminal-body" class="terminal__body mono" role="region" aria-live="polite"></div>
+        <form id="terminal-form" class="terminal__input-row mono" autocomplete="off">
+          <span class="prompt">visitor@rzli.org:~$</span>
+          <input id="terminal-input" type="text" placeholder="输入命令 (如 help / whoami / stack / now / links)..." aria-label="Terminal command input" />
+        </form>
+      </article>
+
+      <!-- Card 4: Principles / Explorations -->
+      <article id="projects" class="card spotlight reveal">
+        <div class="card__eyebrow">03 / <span data-i18n="p1_tag">工程信条</span></div>
+        <h3 class="card__subtitle" data-i18n="p1_title">极简、可验证、零冗余</h3>
+        <p class="card__desc" data-i18n="p1_desc">
+          倾向用最小代价解决核心问题：能静态托管就不上重型后端，能自动化验证就不靠人肉祈祷。
+        </p>
+      </article>
+
+      <article class="card spotlight reveal">
+        <div class="card__eyebrow">04 / <span data-i18n="p2_tag">AI 工作流</span></div>
+        <h3 class="card__subtitle" data-i18n="p2_title">多模态评测与工具编排</h3>
+        <p class="card__desc" data-i18n="p2_desc">
+          围绕视觉-语言推理、高质量标注与评估数据集构建可扩展的数据与推理基础设施。
+        </p>
+      </article>
+
+      <article class="card spotlight reveal">
+        <div class="card__eyebrow">05 / <span data-i18n="p3_tag">持续记录</span></div>
+        <h3 class="card__subtitle" data-i18n="p3_title">数字花园正在生长</h3>
+        <p class="card__desc" data-i18n="p3_desc">
+          这里目前是个人主页起点，后续会逐步接入技术随笔、实验笔记与开源项目索引。
+        </p>
+      </article>
+    </section>
+
+    <!-- Connect Section -->
+    <section id="connect" class="connect card spotlight reveal">
+      <div class="connect__content">
+        <div class="card__eyebrow">06 / <span data-i18n="conn_tag">保持联系</span></div>
+        <h2 class="card__title" data-i18n="conn_title">欢迎交流想法与工程实践</h2>
+        <p class="card__desc" data-i18n="conn_desc">
+          如果你对多模态 AI、自动化工作流或有趣的极客工具感兴趣，欢迎通过 GitHub 与我交流。
+        </p>
+      </div>
+      <div class="connect__actions">
+        <a class="btn btn--primary" href="https://github.com/David1-git" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+        <button id="copy-domain" class="btn btn--ghost" type="button" data-copy="https://www.rzli.org">
+          <span data-i18n="copy_url">复制本站地址</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <span>© <span id="year">2026</span> Runze Li · <span class="mono">www.rzli.org</span></span>
+      <span class="footer__note" data-i18n="footer_note">纯 HTML / CSS / Vanilla JS 构建 · 零第三方框架依赖</span>
+    </div>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
