@@ -369,7 +369,7 @@
     const t = shellText[termLang];
     queueToken++;
     const token = queueToken;
-    appendLine(`visitor@rzli.org:~$ ${raw}`, "term-cmd");
+    appendLine(`visitor@www:~$ ${raw}`, "term-cmd");
 
     if (cmd.startsWith("lang")) {
       const arg = cmd.split(/\s+/)[1];
