@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>rzli.org — Runze Li</title>
-  <meta name="description" content="Runze Li (rzli) — Multimodal AI, Systems &amp; Engineering. Personal homepage at rzli.org." />
+  <meta name="description" content="Runze Li (rzli) — multimodal LLM scene understanding, inference compression, decision models, and controllable image/video generation. Personal homepage at rzli.org." />
   <meta property="og:title" content="rzli.org — Runze Li" />
-  <meta property="og:description" content="Exploring multimodal intelligence, clean systems, and elegant tools." />
+  <meta property="og:description" content="Multimodal LLMs: scene understanding, inference compression, generation and decision — from checkpoint to production." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.rzli.org/" />
   <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
@@ -19,6 +19,8 @@
   <!-- Background layers -->
   <canvas id="neural-canvas" aria-hidden="true"></canvas>
   <div class="grid-overlay" aria-hidden="true"></div>
+  <div class="cursor-aura" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
   <div class="ambient-glow ambient-glow--one" aria-hidden="true"></div>
   <div class="ambient-glow ambient-glow--two" aria-hidden="true"></div>
 
@@ -33,8 +35,7 @@
       <nav class="nav" aria-label="Primary">
         <a href="#focus" data-i18n="nav_focus">方向</a>
         <a href="#terminal" data-i18n="nav_terminal">终端</a>
-        <a href="#projects" data-i18n="nav_projects">探索</a>
-        <a href="#connect" data-i18n="nav_connect">联系</a>
+        <a href="#practice" data-i18n="nav_method">方法</a>
       </nav>
 
       <div class="controls">
@@ -59,7 +60,7 @@
     <section class="hero reveal">
       <div class="status-pill">
         <span class="pulse-dot" aria-hidden="true"></span>
-        <span data-i18n="status_text">在线 · 探索多模态智能与简洁系统</span>
+        <span data-i18n="status_text">在线 · 多模态大模型 / Agent 编排 / 推理压缩</span>
         <span class="status-pill__sep">·</span>
         <code id="live-clock">--:--:--</code>
       </div>
@@ -70,20 +71,16 @@
       </h1>
 
       <p class="hero__subtitle" data-i18n="hero_sub">
-        一名关注 <strong>Multimodal AI</strong>、<strong>高效系统工程</strong> 与 <strong>优雅工具链</strong> 的构建者。
-        在这里记录实验、构建小而美的工具，并把复杂问题拆解成清晰的现实。
+        多模态大模型：<strong>场景理解</strong>、<strong>推理压缩</strong>、<strong>生成与决策</strong>。视觉编码器到批调度服务一路打通，把研究模型压进真实延迟。
       </p>
 
       <div class="hero__actions">
-        <a class="btn btn--primary" href="https://github.com/David1-git" target="_blank" rel="noopener noreferrer">
-          <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
-          </svg>
-          <span>GitHub · @David1-git</span>
-        </a>
-        <a class="btn btn--ghost" href="#terminal">
+        <a class="btn btn--primary" href="#terminal">
           <span data-i18n="hero_cta_term">打开交互终端</span>
           <span aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn--ghost" href="#focus">
+          <span data-i18n="hero_cta_matrix">看能力矩阵</span>
         </a>
       </div>
     </section>
@@ -91,40 +88,82 @@
     <!-- Bento Grid Section -->
     <section id="focus" class="bento-grid">
       <!-- Card 1: Core Focus -->
-      <article class="card bento-span-2 spotlight reveal">
+      <article class="card bento-span-3 spotlight reveal">
         <div class="card__eyebrow">01 / <span data-i18n="card1_tag">核心方向</span></div>
-        <h2 class="card__title" data-i18n="card1_title">让复杂模型与真实工程场景对齐</h2>
+        <h2 class="card__title" data-i18n="card1_title">从权重到线上：多模态大模型的全链路工程</h2>
         <p class="card__desc" data-i18n="card1_desc">
-          专注于多模态理解与推理管线、端到端数据闭环以及轻量级自动化工具链。喜欢把前沿研究能力打磨成可复用、低延迟的生产级系统。
+          视觉编码器选型与模态对齐、指令微调的数据配比与去重、Agent 规划与工具调用协议、推理侧批调度与 KV Cache 管理——四段各有各的失败模式。我把四段接成一条可回归的链路，而不是在单点刷分。
         </p>
-        <div class="chips">
-          <span class="chip">Multimodal LLM</span>
-          <span class="chip">Vision-Language</span>
-          <span class="chip">Data Pipelines</span>
-          <span class="chip">Python / Async</span>
-          <span class="chip">Linux / Edge Infra</span>
+        <div class="pipeline" aria-hidden="true">
+          <span class="pipeline__node mono">Vision Encoder</span>
+          <span class="pipeline__arrow">→</span>
+          <span class="pipeline__node mono">V-L Align</span>
+          <span class="pipeline__arrow">→</span>
+          <span class="pipeline__node mono">SFT / LoRA</span>
+          <span class="pipeline__arrow">→</span>
+          <span class="pipeline__node mono">Agent Loop</span>
+          <span class="pipeline__arrow">→</span>
+          <span class="pipeline__node mono">Batched Serving</span>
         </div>
       </article>
 
-      <!-- Card 2: Interactive Radar / Signal Visual -->
-      <article class="card spotlight reveal">
-        <div class="card__eyebrow">02 / <span data-i18n="card2_tag">数字坐标</span></div>
-        <div class="stat-stack">
-          <div class="stat-row">
-            <span class="stat-label" data-i18n="stat_domain">主域名</span>
-            <span class="stat-val mono">rzli.org</span>
+      <!-- Card 2: Capability Matrix -->
+      <article class="card bento-span-3 matrix-card spotlight reveal">
+        <div class="card__eyebrow">02 / <span data-i18n="card2_tag">能力矩阵</span></div>
+        <div class="matrix">
+          <div class="matrix__row">
+            <div class="matrix__head">
+              <span class="matrix__badge mono">Modeling</span>
+              <span class="matrix__label" data-i18n="mx1">建模层</span>
+            </div>
+            <div class="matrix__tags">
+              <span class="chip chip--mono">Video Temporal</span>
+              <span class="chip chip--mono">Chart / Doc</span>
+              <span class="chip chip--mono">V-L Alignment</span>
+              <span class="chip chip--mono">SFT / LoRA / DPO</span>
+              <span class="chip chip--mono">Data Mixing</span>
+            </div>
           </div>
-          <div class="stat-row">
-            <span class="stat-label" data-i18n="stat_tz">所在时区</span>
-            <span class="stat-val mono">Asia/Shanghai (UTC+8)</span>
+
+          <div class="matrix__row">
+            <div class="matrix__head">
+              <span class="matrix__badge mono">Orchestration</span>
+              <span class="matrix__label" data-i18n="mx2">Agent 层</span>
+            </div>
+            <div class="matrix__tags">
+              <span class="chip chip--mono">Planner-Executor</span>
+              <span class="chip chip--mono">Tool Routing</span>
+              <span class="chip chip--mono">Memory Compression</span>
+              <span class="chip chip--mono">Failure Recovery</span>
+              <span class="chip chip--mono">Trajectory Eval</span>
+            </div>
           </div>
-          <div class="stat-row">
-            <span class="stat-label" data-i18n="stat_focus">当前关注</span>
-            <span class="stat-val" data-i18n="stat_focus_val">Omni-MLLM &amp; Agents</span>
+
+          <div class="matrix__row">
+            <div class="matrix__head">
+              <span class="matrix__badge mono">Serving</span>
+              <span class="matrix__label" data-i18n="mx3">推理层</span>
+            </div>
+            <div class="matrix__tags">
+              <span class="chip chip--mono">Dynamic Batching</span>
+              <span class="chip chip--mono">KV Reuse</span>
+              <span class="chip chip--mono">Quantization</span>
+              <span class="chip chip--mono">Speculative Decode</span>
+              <span class="chip chip--mono">Edge Deploy</span>
+            </div>
           </div>
-          <div class="stat-row">
-            <span class="stat-label" data-i18n="stat_deploy">站点驱动</span>
-            <span class="stat-val mono">Cloudflare Pages</span>
+
+          <div class="matrix__row">
+            <div class="matrix__head">
+              <span class="matrix__badge mono">Systems</span>
+              <span class="matrix__label" data-i18n="mx4">工程层</span>
+            </div>
+            <div class="matrix__tags">
+              <span class="chip chip--mono">Async Pipelines</span>
+              <span class="chip chip--mono">Eval Harness</span>
+              <span class="chip chip--mono">Regression Gates</span>
+              <span class="chip chip--mono">Cost Observability</span>
+            </div>
           </div>
         </div>
       </article>
@@ -150,53 +189,51 @@
         <div id="terminal-body" class="terminal__body mono" role="region" aria-live="polite"></div>
         <form id="terminal-form" class="terminal__input-row mono" autocomplete="off">
           <span class="prompt">visitor@rzli.org:~$</span>
-          <input id="terminal-input" type="text" placeholder="输入命令 (如 help / whoami / stack / now / links)..." aria-label="Terminal command input" />
+          <input id="terminal-input" type="text" placeholder="输入命令 · help 看全部" aria-label="Terminal command input" />
         </form>
-      </article>
-
-      <!-- Card 4: Principles / Explorations -->
-      <article id="projects" class="card spotlight reveal">
-        <div class="card__eyebrow">03 / <span data-i18n="p1_tag">工程信条</span></div>
-        <h3 class="card__subtitle" data-i18n="p1_title">极简、可验证、零冗余</h3>
-        <p class="card__desc" data-i18n="p1_desc">
-          倾向用最小代价解决核心问题：能静态托管就不上重型后端，能自动化验证就不靠人肉祈祷。
-        </p>
-      </article>
-
-      <article class="card spotlight reveal">
-        <div class="card__eyebrow">04 / <span data-i18n="p2_tag">AI 工作流</span></div>
-        <h3 class="card__subtitle" data-i18n="p2_title">多模态评测与工具编排</h3>
-        <p class="card__desc" data-i18n="p2_desc">
-          围绕视觉-语言推理、高质量标注与评估数据集构建可扩展的数据与推理基础设施。
-        </p>
-      </article>
-
-      <article class="card spotlight reveal">
-        <div class="card__eyebrow">05 / <span data-i18n="p3_tag">持续记录</span></div>
-        <h3 class="card__subtitle" data-i18n="p3_title">数字花园正在生长</h3>
-        <p class="card__desc" data-i18n="p3_desc">
-          这里目前是个人主页起点，后续会逐步接入技术随笔、实验笔记与开源项目索引。
-        </p>
       </article>
     </section>
 
-    <!-- Connect Section -->
-    <section id="connect" class="connect card spotlight reveal">
-      <div class="connect__content">
-        <div class="card__eyebrow">06 / <span data-i18n="conn_tag">保持联系</span></div>
-        <h2 class="card__title" data-i18n="conn_title">欢迎交流想法与工程实践</h2>
-        <p class="card__desc" data-i18n="conn_desc">
-          如果你对多模态 AI、自动化工作流或有趣的极客工具感兴趣，欢迎通过 GitHub 与我交流。
+    <!-- Practice Section -->
+    <section id="practice" class="bento-grid">
+      <article class="card spotlight reveal">
+        <div class="card__eyebrow">03 / <span data-i18n="p1_tag">工程信条</span></div>
+        <h3 class="card__subtitle" data-i18n="p1_title">极简、可验证、零冗余</h3>
+        <p class="card__desc" data-i18n="p1_desc">
+          本站即样本：纯 HTML/CSS/JS，Cloudflare Pages 边缘托管，零框架零构建。任何优化先落指标，再动物模型。
         </p>
-      </div>
-      <div class="connect__actions">
-        <a class="btn btn--primary" href="https://github.com/David1-git" target="_blank" rel="noopener noreferrer">
-          GitHub
-        </a>
-        <button id="copy-domain" class="btn btn--ghost" type="button" data-copy="https://www.rzli.org">
-          <span data-i18n="copy_url">复制本站地址</span>
-        </button>
-      </div>
+      </article>
+
+      <article class="card bento-span-2 spotlight reveal">
+        <div class="card__eyebrow">04 / <span data-i18n="p2_tag">评测先行</span></div>
+        <h3 class="card__subtitle" data-i18n="p2_title">评测先于模型</h3>
+        <p class="card__desc" data-i18n="p2_desc">
+          换一版权重、改一个 prompt，先跑定版评测集与回归门禁。多模态评测的坑在口径——分辨率、帧采样、prompt 模板不一致，榜单就没有意义。
+        </p>
+      </article>
+
+      <article class="card bento-span-3 card--threads spotlight reveal">
+        <div class="card__eyebrow">05 / <span data-i18n="p3_tag">当前主线</span></div>
+        <h3 class="card__subtitle" data-i18n="p3_title">正在啃的四件事</h3>
+        <ul class="threads">
+          <li>
+            <span class="threads__k" data-i18n="th1_k">场景理解</span>
+            <span class="threads__v" data-i18n="th1_v">开放词表检测 · 时序事件定位 · 区域级描述与场景图</span>
+          </li>
+          <li>
+            <span class="threads__k" data-i18n="th2_k">推理压缩</span>
+            <span class="threads__v" data-i18n="th2_v">量化 · 视觉 token 剪枝 · KV 压缩与投机解码</span>
+          </li>
+          <li>
+            <span class="threads__k" data-i18n="th3_k">决策模型</span>
+            <span class="threads__v" data-i18n="th3_v">级联判定 · 置信度校准 · 证据 grounding 与人在回路</span>
+          </li>
+          <li>
+            <span class="threads__k" data-i18n="th4_k">图像 / 视频生成</span>
+            <span class="threads__v" data-i18n="th4_v">DiT / flow matching 可控生成 · 时序一致性 · 步数蒸馏</span>
+          </li>
+        </ul>
+      </article>
     </section>
   </main>
 
