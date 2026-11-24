@@ -25,7 +25,7 @@
       mx4: "工程层",
       p1_tag: "工程信条",
       p1_title: "极简、可验证、零冗余",
-      p1_desc: "本站即样本：纯 HTML/CSS/JS，Cloudflare Pages 边缘托管，零框架零构建。任何优化先落指标，再动物模型。",
+      p1_desc: "本站即样本：纯 HTML/CSS/JS，Cloudflare Pages 边缘托管，零框架零构建。任何优化先落指标，再动模型。",
       p2_tag: "评测先行",
       p2_title: "评测先于模型",
       p2_desc:
