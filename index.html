@@ -17,6 +17,7 @@
 </head>
 <body>
   <!-- Background layers -->
+  <canvas id="gl-canvas" aria-hidden="true"></canvas>
   <canvas id="neural-canvas" aria-hidden="true"></canvas>
   <div class="grid-overlay" aria-hidden="true"></div>
   <div class="cursor-aura" aria-hidden="true"></div>
@@ -58,6 +59,10 @@
   <main id="top" class="container">
     <!-- Hero Section -->
     <section class="hero reveal">
+      <div class="hero__viz" aria-hidden="true">
+        <canvas id="patch-canvas"></canvas>
+      </div>
+      <span class="hero__viz-cap mono" aria-hidden="true">simulated attention · L7/H3</span>
       <div class="status-pill">
         <span class="pulse-dot" aria-hidden="true"></span>
         <span data-i18n="status_text">在线 · 多模态大模型 / Agent 编排 / 推理压缩</span>
@@ -181,7 +186,8 @@
             <button class="cmd-pill" data-cmd="whoami">whoami</button>
             <button class="cmd-pill" data-cmd="stack">stack</button>
             <button class="cmd-pill" data-cmd="now">now</button>
-            <button class="cmd-pill" data-cmd="links">links</button>
+            <button class="cmd-pill" data-cmd="top">top</button>
+            <button class="cmd-pill" data-cmd="nvidia-smi">nvidia-smi</button>
             <button class="cmd-pill" data-cmd="help">help</button>
             <button class="cmd-pill" data-cmd="clear">clear</button>
           </div>
@@ -189,7 +195,7 @@
         <div id="terminal-body" class="terminal__body mono" role="region" aria-live="polite"></div>
         <form id="terminal-form" class="terminal__input-row mono" autocomplete="off">
           <span class="prompt">visitor@www:~$</span>
-          <input id="terminal-input" type="text" placeholder="输入命令 · help 看全部" aria-label="Terminal command input" />
+          <input id="terminal-input" type="text" placeholder="输入命令 · Tab 补全 · ↑/↓ 历史 · help 看全部" aria-label="Terminal command input" />
         </form>
       </article>
     </section>
@@ -244,6 +250,7 @@
     </div>
   </footer>
 
+  <script src="./fx.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

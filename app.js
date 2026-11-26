@@ -259,13 +259,18 @@
       notFound: "command not found: ",
       tryHelp: ". Try 'help'.",
       commands: [
-        "Available commands:",
-        "  whoami   - identity & focus",
-        "  stack    - modeling / agents / serving / systems",
-        "  now      - active threads",
-        "  links    - public endpoints",
-        "  lang     - lang en | lang zh",
-        "  clear    - clear buffer",
+        "Available commands (Tab to complete, ↑/↓ history, Ctrl+L clear):",
+        "  whoami      - identity & focus",
+        "  stack       - modeling / agents / serving / systems",
+        "  now         - active threads",
+        "  links       - public endpoints",
+        "  top         - simulated pipeline load (demo)",
+        "  nvidia-smi  - simulated GPU monitor (demo)",
+        "  theme       - toggle dark / light",
+        "  history     - command history",
+        "  date / echo - utilities",
+        "  lang        - lang en | lang zh",
+        "  clear       - clear buffer",
       ],
       whoami: [
         "Runze Li (rzli)",
@@ -295,13 +300,18 @@
       notFound: "未找到命令：",
       tryHelp: "。输入 'help' 查看可用命令。",
       commands: [
-        "可用命令：",
-        "  whoami   - 身份与方向",
-        "  stack    - 建模 / Agent / 推理 / 工程",
-        "  now      - 当前主线",
-        "  links    - 公开入口",
-        "  lang     - lang en | lang zh",
-        "  clear    - 清空缓冲区",
+        "可用命令（支持 Tab 补全、↑/↓ 翻历史、Ctrl+L 清屏）：",
+        "  whoami      - 身份与方向",
+        "  stack       - 建模 / Agent / 推理 / 工程",
+        "  now         - 当前主线",
+        "  links       - 公开入口",
+        "  top         - 模拟管线负载（演示）",
+        "  nvidia-smi  - 模拟 GPU 监控（演示）",
+        "  theme       - 切换深浅主题 (dark/light)",
+        "  history     - 查看输入历史",
+        "  date / echo - 常用小工具",
+        "  lang        - lang en | lang zh",
+        "  clear       - 清空缓冲区",
       ],
       whoami: [
         "Runze Li (rzli)",
@@ -399,6 +409,15 @@
     }
   }
 
+  window.RZ_TERM = {
+    lang: () => termLang,
+    appendLine,
+    nextToken: () => ++queueToken,
+    isCurrent: (tok) => tok === queueToken,
+    applyTheme,
+    clear: () => runCommand("clear"),
+  };
+
   // Initial greeting
   typeLines([shellText[termLang].banner], "term-muted", queueToken);
   window.setTimeout(() => runCommand("whoami"), 120);
@@ -421,20 +440,25 @@
   const canvas = document.getElementById("neural-canvas");
   if (canvas && !reduced) {
     const ctx = canvas.getContext("2d");
+    const fx = window.RZ_FX;
     let width = 0;
     let height = 0;
     let particles = [];
+    let rafId = 0;
     const mouse = { x: -9999, y: -9999 };
 
     function resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const low = Boolean(fx && fx.low);
+      const dpr = Math.min(window.devicePixelRatio || 1, low ? 1 : 2);
       width = window.innerWidth;
       height = window.innerHeight;
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const count = Math.min(Math.floor((width * height) / 22000), 75);
+      const cap = low ? 26 : 70;
+      const density = low ? 42000 : 23000;
+      const count = Math.min(Math.floor((width * height) / density), cap);
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -445,21 +469,30 @@
     }
 
     window.addEventListener("resize", resize);
-    window.addEventListener("pointermove", (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
+    window.addEventListener(
+      "pointermove",
+      (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      },
+      { passive: true }
+    );
     window.addEventListener("pointerleave", () => {
       mouse.x = -9999;
       mouse.y = -9999;
     });
+    if (fx && fx.onLow) fx.onLow(resize);
 
     resize();
 
     function frame() {
+      rafId = 0;
+      if (document.hidden) return;
       ctx.clearRect(0, 0, width, height);
       const isDark = html.getAttribute("data-theme") !== "light";
-      const dotColor = isDark ? "rgba(125, 211, 252, 0.55)" : "rgba(79, 70, 229, 0.42)";
+      const low = Boolean(fx && fx.low);
+      const linkDist = low ? 95 : 130;
+      const dotColor = isDark ? "rgba(125, 211, 252, 0.52)" : "rgba(79, 70, 229, 0.4)";
       const lineRGB = isDark ? "129, 140, 248" : "79, 70, 229";
 
       for (let i = 0; i < particles.length; i++) {
@@ -469,12 +502,14 @@
         if (p.x < 0 || p.x > width) p.vx *= -1;
         if (p.y < 0 || p.y > height) p.vy *= -1;
 
-        const dxm = mouse.x - p.x;
-        const dym = mouse.y - p.y;
-        const dm = Math.hypot(dxm, dym);
-        if (dm < 170 && dm > 1) {
-          p.x += (dxm / dm) * 0.35;
-          p.y += (dym / dm) * 0.35;
+        if (!low) {
+          const dxm = mouse.x - p.x;
+          const dym = mouse.y - p.y;
+          const dm = Math.hypot(dxm, dym);
+          if (dm < 170 && dm > 1) {
+            p.x += (dxm / dm) * 0.35;
+            p.y += (dym / dm) * 0.35;
+          }
         }
 
         ctx.beginPath();
@@ -485,8 +520,8 @@
         for (let j = i + 1; j < particles.length; j++) {
           const q = particles[j];
           const dist = Math.hypot(p.x - q.x, p.y - q.y);
-          if (dist < 130) {
-            const alpha = (1 - dist / 130) * (isDark ? 0.22 : 0.14);
+          if (dist < linkDist) {
+            const alpha = (1 - dist / linkDist) * (isDark ? 0.2 : 0.13);
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
@@ -497,9 +532,14 @@
         }
       }
 
-      requestAnimationFrame(frame);
+      rafId = requestAnimationFrame(frame);
     }
 
-    requestAnimationFrame(frame);
+    function startLoop() {
+      if (!rafId && !document.hidden) rafId = requestAnimationFrame(frame);
+    }
+
+    document.addEventListener("visibilitychange", startLoop);
+    startLoop();
   }
 })();
